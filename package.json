@@ -1,0 +1,52 @@
+{
+  "name": "chords-over-lyrics-to-chordpro",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local TXT to ChordPro converter with a web editor and song library.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "dist/src/cli.js",
+  "bin": {
+    "convert": "./convert2.0.js",
+    "convert-legacy": "./convert.js"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n server,client -c blue,cyan \"tsx watch server/index.ts\" \"vite --config client/vite.config.ts\"",
+    "build": "tsc -p tsconfig.server.json && vite build --config client/vite.config.ts",
+    "start": "node dist/server/index.js",
+    "convert": "tsx src/cli.ts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.5.0",
+    "concurrently": "^10.0.3",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vite": "^7.1.7",
+    "vitest": "^3.1.4"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "chordsheetjs": "^15.3.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "date-fns": "^4.4.0",
+    "express": "^5.2.1",
+    "lucide-react": "^1.17.0",
+    "monaco-editor": "^0.55.1",
+    "multer": "^2.1.1",
+    "playwright": "^1.60.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router-dom": "^7.16.0"
+  }
+}
