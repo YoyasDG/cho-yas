@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.gitignore
+.dev.log
+.dev-current.log
+pdf
+pdfoutput
+songconverted
+songinput
+samplefiles
+wireframes
+fixtures
+tests
+README.md
+Production.md
+.tmp-upload-test.txt

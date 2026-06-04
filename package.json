@@ -4,6 +4,9 @@
   "private": true,
   "description": "Local TXT to ChordPro converter with a web editor and song library.",
   "license": "MIT",
+  "engines": {
+    "node": "22.x"
+  },
   "type": "commonjs",
   "main": "dist/src/cli.js",
   "bin": {
