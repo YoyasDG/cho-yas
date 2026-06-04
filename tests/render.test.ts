@@ -35,12 +35,19 @@ describe('ChordPro renderers', () => {
   });
 
   it('does not treat lyric lines as instrumental progressions in PDF rendering', () => {
-    const html = renderChordProHtml('[Bm]Incomparable eres [E]Tú');
+    const html = renderChordProHtml('[Bm]Incomparable eres [E]TÃº');
 
     expect(html).not.toContain('<div class="instrumental-line">');
     expect(html).toContain('<div class="lyrics">Incomparable eres </div>');
-    expect(html).toContain('<div class="lyrics">Tú</div>');
+    expect(html).toContain('<div class="lyrics">TÃº</div>');
   });
+
+  it('preserves blank lines between lyric sections in PDF rendering', () => {
+    const html = renderChordProHtml('[C]Primera linea\n\n[G]Segunda linea');
+
+    expect(html).toContain('<div class="empty-line" aria-hidden="true"></div>');
+  });
+
   it('adds PDF styles that wrap long lyric content instead of overflowing horizontally', () => {
     const document = buildPdfDocument('<div class="row"><div class="lyrics">Linea larga</div></div>', 1);
 

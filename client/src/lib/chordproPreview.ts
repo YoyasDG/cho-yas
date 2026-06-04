@@ -197,6 +197,10 @@ export function renderChordProPreview(chordPro: string): string {
         margin: 0.15rem 0 0.35rem;
       }
 
+      .chordpro-preview .empty-line {
+        height: 1.1em;
+      }
+
       .chordpro-preview .row {
         align-items: flex-end;
       }

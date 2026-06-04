@@ -221,6 +221,10 @@ function buildPdfDocument(contentHtml, columns) {
         margin-bottom: 0.35rem;
       }
 
+      .chordpro-sheet .empty-line {
+        height: 1.1em;
+      }
+
       .chordpro-sheet .row {
         display: flex;
         flex-wrap: wrap;

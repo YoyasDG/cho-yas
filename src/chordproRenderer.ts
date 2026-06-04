@@ -72,16 +72,28 @@ function renderContentLine(line: string): string {
 
 export function renderChordProBodyHtml(chordPro: string): string {
   const lines = chordPro.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').split('\n');
-  const paragraphs: string[] = [];
+  const blocks: string[] = [];
   let current: string[] = [];
+  let pendingBlankLines = 0;
 
   function flushParagraph() {
     if (current.length === 0) {
       return;
     }
 
-    paragraphs.push(`<div class="paragraph">${current.join('')}</div>`);
+    blocks.push(`<div class="paragraph">${current.join('')}</div>`);
     current = [];
+  }
+
+  function flushBlankLines() {
+    if (pendingBlankLines === 0) {
+      return;
+    }
+
+    blocks.push(
+      Array.from({ length: pendingBlankLines }, () => '<div class="empty-line" aria-hidden="true"></div>').join(''),
+    );
+    pendingBlankLines = 0;
   }
 
   for (const rawLine of lines) {
@@ -89,8 +101,11 @@ export function renderChordProBodyHtml(chordPro: string): string {
 
     if (!line.trim()) {
       flushParagraph();
+      pendingBlankLines += 1;
       continue;
     }
+
+    flushBlankLines();
 
     const commentMatch = line.match(/^\s*\{comment(?::|\s*:\s*)(.*?)\}\s*$/i);
     if (commentMatch) {
@@ -106,5 +121,6 @@ export function renderChordProBodyHtml(chordPro: string): string {
   }
 
   flushParagraph();
-  return `<div class="chord-sheet">${paragraphs.join('')}</div>`;
+  flushBlankLines();
+  return `<div class="chord-sheet">${blocks.join('')}</div>`;
 }
