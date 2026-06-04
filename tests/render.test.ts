@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { renderChordProPreview } from '../client/src/lib/chordproPreview';
-import { renderChordProHtml } from '../server/services/pdfService';
+import { buildPdfDocument, renderChordProHtml } from '../server/services/pdfService';
 
 describe('ChordPro renderers', () => {
   it('renders chord-only lines as instrumental progressions in the preview', () => {
@@ -40,5 +40,12 @@ describe('ChordPro renderers', () => {
     expect(html).not.toContain('<div class="instrumental-line">');
     expect(html).toContain('<div class="lyrics">Incomparable eres </div>');
     expect(html).toContain('<div class="lyrics">Tú</div>');
+  });
+  it('adds PDF styles that wrap long lyric content instead of overflowing horizontally', () => {
+    const document = buildPdfDocument('<div class="row"><div class="lyrics">Linea larga</div></div>', 1);
+
+    expect(document).toContain('flex-wrap: wrap;');
+    expect(document).toContain('white-space: pre-wrap;');
+    expect(document).toContain('overflow-wrap: break-word;');
   });
 });

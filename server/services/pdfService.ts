@@ -115,7 +115,7 @@ export function renderChordProHtml(chordPro: string): string {
   return `${metadataHtml}<div class="rendered-song">${bodyHtml}</div>`;
 }
 
-function buildPdfDocument(contentHtml: string, columns: PdfColumnCount): string {
+export function buildPdfDocument(contentHtml: string, columns: PdfColumnCount): string {
   const formatter = new ChordSheetJS.HtmlDivFormatter();
   const formatterCss = cssObjectToString('.chordpro-sheet', formatter.defaultCss as Record<string, Record<string, string>>);
 
@@ -243,14 +243,21 @@ function buildPdfDocument(contentHtml: string, columns: PdfColumnCount): string 
       }
 
       .chordpro-sheet .row {
+        display: flex;
+        flex-wrap: wrap;
         align-items: flex-end;
         gap: 1px;
+        max-width: 100%;
+        min-width: 0;
       }
 
       .chordpro-sheet .column {
         display: inline-flex;
         flex-direction: column;
         align-items: flex-start;
+        min-width: 0;
+        max-width: 100%;
+        flex: 0 1 auto;
       }
 
       .chordpro-sheet .chord {
@@ -268,7 +275,18 @@ function buildPdfDocument(contentHtml: string, columns: PdfColumnCount): string 
 
       .chordpro-sheet .lyrics {
         font-size: 14px;
-        white-space: pre;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      .chordpro-sheet .plain-row {
+        display: block;
+      }
+
+      .chordpro-sheet .plain-row .lyrics {
+        display: block;
+        width: 100%;
       }
 
       ${formatterCss}

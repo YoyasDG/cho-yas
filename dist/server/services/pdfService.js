@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderChordProHtml = renderChordProHtml;
+exports.buildPdfDocument = buildPdfDocument;
 exports.generatePdfBuffer = generatePdfBuffer;
 const chordsheetjs_1 = __importDefault(require("chordsheetjs"));
 const playwright_1 = require("playwright");
@@ -221,14 +222,21 @@ function buildPdfDocument(contentHtml, columns) {
       }
 
       .chordpro-sheet .row {
+        display: flex;
+        flex-wrap: wrap;
         align-items: flex-end;
         gap: 1px;
+        max-width: 100%;
+        min-width: 0;
       }
 
       .chordpro-sheet .column {
         display: inline-flex;
         flex-direction: column;
         align-items: flex-start;
+        min-width: 0;
+        max-width: 100%;
+        flex: 0 1 auto;
       }
 
       .chordpro-sheet .chord {
@@ -246,7 +254,18 @@ function buildPdfDocument(contentHtml, columns) {
 
       .chordpro-sheet .lyrics {
         font-size: 14px;
-        white-space: pre;
+        white-space: pre-wrap;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+
+      .chordpro-sheet .plain-row {
+        display: block;
+      }
+
+      .chordpro-sheet .plain-row .lyrics {
+        display: block;
+        width: 100%;
       }
 
       ${formatterCss}
